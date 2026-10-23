@@ -1,0 +1,19 @@
+{
+  "name": "canvasly",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Real-time collaborative whiteboard on AWS (Cognito + API GW WebSocket + Lambda + DynamoDB + S3, React + Konva + Yjs)",
+  "workspaces": [
+    "shared",
+    "infra",
+    "backend",
+    "frontend",
+    "scripts"
+  ],
+  "scripts": {
+    "build": "npm run build -w shared && npm run build -w backend && npm run build -w infra",
+    "test": "npm test -w backend",
+    "dev": "npm run dev -w frontend"
+  },
+  "license": "MIT"
+}
