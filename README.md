@@ -1,4 +1,4 @@
-# Canvasly — real-time collaborative whiteboard on AWS
+# Canvasly —  collaborative whiteboard on AWS
 
 Multiple users draw, add shapes, sticky notes and text on the same infinite
 canvas at the same time, see each other's live cursors, and have boards saved
@@ -47,39 +47,7 @@ Full-resolution diagram: `docs/architecture.md`.
 `$connect` `$disconnect` `joinBoard` `leaveBoard` `syncUpdate` `cursorMove`
 `presence` `ping`. Protocol defined in `shared/src/protocol.ts`.
 
-## Setup
 
-```bash
-# 1. install everything
-cd canvasly
-npm install            # root workspaces: shared, infra, backend, frontend
-
-# 2. build shared types (everything imports these)
-npm run build -w shared
-
-# 3. frontend dev server
-npm run dev -w frontend
-
-# 4. backend unit tests
-npm test -w backend
-```
-
-## Deploy (you run this — it touches your AWS account)
-
-> This repo ships deploy-ready CDK. It does **not** deploy for you: deploying
-> creates billable resources in *your* account. Review, then run it yourself.
-
-```bash
-cd infra
-npm run build
-npx cdk bootstrap            # once per account/region
-npx cdk deploy -c env=dev    # dev stack
-npx cdk deploy -c env=prod   # prod stack (separate stack, separate tables)
-```
-
-Outputs (WebSocket URL, Cognito pool/client ids, buckets) are printed and
-written to `infra/cdk-outputs.json`; feed them to the frontend via
-`frontend/.env` (see `frontend/.env.example`).
 
 ## Design decisions
 
@@ -123,11 +91,7 @@ Costs scale with active connection-minutes and message volume, not stored
 boards. A 20-user load test for a few hours is cents. Validate with
 `scripts/load-test.ts` + CloudWatch before trusting any projection.
 
-## Testing
 
-- `npm test -w backend` — Lambda handler + permission-check unit tests.
-- `npm run load-test -w scripts` — simulate 20+ concurrent users on one board,
-  reports p50/p95/p99 message latency.
 
 ## Environments
 
